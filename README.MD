@@ -1,4 +1,4 @@
-## Terraform guide
+## Terraform
 
 
 ### What is terraform?
