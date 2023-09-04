@@ -8,6 +8,7 @@ With terraform you can automate the provisioning of your infrastructure using co
 You can also use it to replicate infrastructure for example to have a dev and prod env
 
 ### Key Components:
+
 `Terraform CLI`: The command-line interface for Terraform.
 
 `Configuration Files`: Defined in HCL, they dictate the infrastructure to be created.
@@ -20,6 +21,7 @@ You can also use it to replicate infrastructure for example to have a dev and pr
 
 
 ### Common Terraform Commands:
+
 `terraform init`: Initializes the Terraform directory.
 
 `terraform plan`: Previews changes Terraform will enact based on configuration files.
