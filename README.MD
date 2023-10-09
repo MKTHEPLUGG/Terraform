@@ -39,6 +39,7 @@ You can also use it to replicate infrastructure for example to have a dev and pr
 `terraform output`: Shows outputs from the state.
 
 ### Basic Steps to Using Terraform:
+
 `Write Configuration`: Use a .tf extension (like main.tf).
 
 `Initialization`: Execute terraform init.
@@ -62,6 +63,36 @@ resource "aws_instance" "example" {
 }
 ```
 
+### Terraform commands summary
+
+#### Run a terraform file
+
+in the working directory (or specify directory):
+
+```terraform
+terraform init
+terraform validate
+terraform fmt
+terraform plan
+terraform apply
+```
+
+if changes are made to your provider defs you need to `terraform init --upgrade`
+
+#### Check out the .tfstate file
+
+```terraform
+terraform show
+
+# see what is being managed by state file
+terraform state list
+```
+
+#### Remove all your resources
+
+```terraform
+terraform destroy
+```
 
 
 ### Sources
