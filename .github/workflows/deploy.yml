@@ -10,10 +10,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: set permissions
-      shell: bash
-      run: |
-        chmod +x entrypoint.sh
 
 
     - name: Terraform Deploy to Azure
