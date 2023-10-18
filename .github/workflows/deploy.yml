@@ -51,6 +51,3 @@ jobs:
         subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         working_directory: './vnet'
         # specify working directory to choose where you want to deploy from
-        
-        ### TO REMOVE !!! USE WITH CAUTION
-        command: 'destroy -auto-approve' 
