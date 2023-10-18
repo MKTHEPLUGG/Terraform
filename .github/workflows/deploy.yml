@@ -28,7 +28,7 @@ jobs:
 
 
     - name: Terraform Deploy to Azure
-      uses: MKTHEPLUGG/deploy-tf-vrs@v4
+      uses: MKTHEPLUGG/deploy-tf-vrs@v1
       env:
         TF_LOG: DEBUG
       with:
