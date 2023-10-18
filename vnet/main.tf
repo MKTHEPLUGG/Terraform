@@ -3,7 +3,7 @@ module "network" {
 
   resource_prefix = "test123"  # Provide necessary variable values here
   location        = "westeurope"
-  resourceGroup = "test-tf-1"
+  resourceGroup = "test-tf-2"
 }
 
 output "subnet_id" {
