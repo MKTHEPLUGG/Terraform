@@ -2,7 +2,7 @@
 
 
 
-Absolutely, managing Terraform state is crucial, especially when you're using automation and CI/CD pipelines. The state file keeps track of the IDs and properties of the resources Terraform manages, so it's essential to keep it safe, consistent, and available.
+Ab
 
 When working on local machines, Terraform uses a local state file named `terraform.tfstate`. However, when you're using Terraform in a team or in an automated pipeline, it's vital to use **remote state**. Remote state allows Terraform to store its state file on a shared storage backend, which can be accessed by other team members or automation pipelines, ensuring consistency.
 
@@ -56,10 +56,8 @@ terraform {
 
 - **Consistency**: Ensure everyone on the team and all CI/CD processes use remote state. Having a mix of local and remote states will lead to conflicts and confusion.
 
-By integrating remote state into your CI/CD processes, you ensure a single source of truth for your infrastructure's current state, making your infrastructure deployments more consistent and reliable.
 
-
-Certainly! Let's create a Terraform configuration that will set up Azure Blob Storage for Terraform state management.
+Let's create a Terraform configuration that will set up Azure Blob Storage for Terraform state management.
 
 ### **Prerequisites**:
 1. Ensure you have the Azure CLI and Terraform installed.
@@ -153,14 +151,9 @@ When you run `terraform init` on this configuration, Terraform will configure th
 Remember to handle the permissions properly, ensuring the Service Principal or Managed Identity has the required access to this storage. You can do this through Azure Portal's RBAC settings, or using further Terraform configurations.
 
 ### **Notes**:
-- Ensure the storage account name is globally unique. The example above uses "tfstatestore12345", but you might need to adjust this for your needs.
 - For full production readiness, consider adding more features like network rules, encryption settings, and other security configurations to the storage account.
 
 ## Step 3, Create service principal for auth
-
-Certainly! If you're planning on using GitHub Actions to deploy Terraform code to Azure, and want to persist your Terraform state in Azure Blob Storage, then using a Service Principal (essentially an Azure AD application registration with rights in Azure) is a sensible choice.
-
-Here's a step-by-step guide to achieve this:
 
 ### 1. Create a Service Principal for GitHub Actions:
 
@@ -196,59 +189,141 @@ For security, store the Service Principal details and other sensitive informatio
 
 Here's a sample GitHub Actions workflow for this:
 
+#### Action:
+
 ```yaml
-name: 'Terraform Deploy to Azure'
+name: "Terraform Deploy to Azure"
+description: "Deploy infrastructure to Azure using Terraform"
+inputs:
+  storage_account_name:
+    description: "Azure Storage Account Name for Terraform State"
+    required: true
+  container_name:
+    description: "Azure Blob Container Name for Terraform State"
+    required: true
+  key:
+    description: "Key for Terraform State in Azure Blob"
+    required: true
+  resource_group_name:
+    description: "Azure Resource Group Name for Storage Account"
+    required: true
+  client_id:
+    description: "Azure Client ID for Service Principal"
+    required: true
+  client_secret:
+    description: "Azure Client Secret for Service Principal"
+    required: true
+  tenant_id:
+    description: "Azure Tenant ID for Service Principal"
+    required: true
+  subscription_id:
+    description: "Azure subscription ID for Service Principal"
+    required: true
+  working_directory:
+    description: "Working directory for Terraform files"
+    required: false
+    default: "."
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        terraform init \
+            -backend-config="storage_account_name=${{ inputs.storage_account_name }}" \
+            -backend-config="container_name=${{ inputs.container_name }}" \
+            -backend-config="key=${{ inputs.key }}" \
+            -backend-config="resource_group_name=${{ inputs.resource_group_name }}" \
+            -backend-config="client_id=${{ inputs.client_id }}" \
+            -backend-config="client_secret=${{ inputs.client_secret }}" \
+            -backend-config="tenant_id=${{ inputs.tenant_id }}" \
+            -backend-config="subscription_id=${{ inputs.subscription_id }}"
+        terraform validate && terraform plan && terraform apply -auto-approve
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+
+```
+
+#### Workflow: 
+
+```YAML
+name: 'Use Terraform Action'
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
-  terraform:
-    name: 'Deploy to Azure'
+  deploy:
     runs-on: ubuntu-latest
-    environment: production
-
-    defaults:
-      run:
-        working-directory: ./path-to-terraform-files
-
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
+      uses: hashicorp/setup-terraform@v2
 
-    - name: Terraform Initialize
+    - name: Terraform Deploy to Azure
+      uses: MKTHEPLUGG/deploy-tf-vrs@v1
+      # these vars are for azurerm providor to auth with azure via SP to deploy
       env:
-        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      run: |
-        terraform init -backend-config="storage_account_name=YOUR_STORAGE_ACCOUNT_NAME" -backend-config="container_name=YOUR_CONTAINER_NAME" -backend-config="key=terraform.tfstate" -backend-config="resource_group_name=YOUR_RESOURCE_GROUP_NAME" -backend-config="client_id=$AZURE_CLIENT_ID" -backend-config="client_secret=$AZURE_CLIENT_SECRET" -backend-config="tenant_id=$AZURE_TENANT_ID"
-    
-    - name: Terraform Validate
-      run: terraform validate
-
-    - name: Terraform Plan
-      run: terraform plan
-
-    - name: Terraform Apply
-      run: terraform apply -auto-approve
+        TF_VAR_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+        TF_VAR_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+        TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+        TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      with:
+        # these vars are for the storage account authentication with SP
+        storage_account_name: 'tfstatestore12345'
+        container_name: tfstatecontainer
+        key: 'terraform.tfstate'
+        resource_group_name: TerraformStateRG
+        client_id: ${{ secrets.AZURE_CLIENT_ID }}
+        client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+        tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        working_directory: './vnet'
+        # specify working directory to choose where you want to deploy from
 
 ```
 
 ### 5. Use Terraform:
 
-In your Terraform configuration, ensure that the backend is configured to use AzureRM:
+In your Terraform configuration, ensure that the backend & front end are configured & authenticated to use AzureRM:
+
+#### /providers.tf:
+
+```hcl
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.76.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
+    }
+  }
+  required_version = ">= 1.3.7"
+}
+
+provider "azurerm" {
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
+  subscription_id = var.subscription_id
+  features {
+
+  }
+}
+```
+#### /backend.tf:
 
 ```hcl
 terraform {
   backend "azurerm" {
-    storage_account_name = "YOUR_STORAGE_ACCOUNT_NAME"
-    container_name       = "YOUR_CONTAINER_NAME"
-    key                  = "terraform.tfstate"
+    # this config is used to auth with azure blob for backend of tf state file, 
+    # the values are to be defined in workflow &or via secrets
   }
 }
 ```
