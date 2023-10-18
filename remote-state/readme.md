@@ -1,3 +1,7 @@
+## REWRITE DOCUMENTATION WITH WORKING PROJECT AS SOURCE BEFORE RELEASE !!!
+
+
+
 Absolutely, managing Terraform state is crucial, especially when you're using automation and CI/CD pipelines. The state file keeps track of the IDs and properties of the resources Terraform manages, so it's essential to keep it safe, consistent, and available.
 
 When working on local machines, Terraform uses a local state file named `terraform.tfstate`. However, when you're using Terraform in a team or in an automated pipeline, it's vital to use **remote state**. Remote state allows Terraform to store its state file on a shared storage backend, which can be accessed by other team members or automation pipelines, ensuring consistency.
