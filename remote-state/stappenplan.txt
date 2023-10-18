@@ -2,4 +2,4 @@ Stap 1 storage account maken voor remote state in te bewaren
 
 Stap 2 Service principal aanmaken via shell
 
-stap 3 in action verwijzen naar storage account
+stap 3 secrets instellen
