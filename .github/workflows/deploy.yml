@@ -19,7 +19,7 @@ jobs:
       uses: MKTHEPLUGG/deploy-tf-vrs@v3
       with:
         storage_account_name: 'tfstatestore12345'
-        container_name: $tfstatecontainer
+        container_name: tfstatecontainer
         key: 'terraform.tfstate'
         resource_group_name: TerraformStateRG
         client_id: ${{ secrets.AZURE_CLIENT_ID }}
