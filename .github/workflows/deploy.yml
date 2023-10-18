@@ -16,7 +16,7 @@ jobs:
 
 
     - name: Terraform Deploy to Azure
-      uses: MKTHEPLUGG/deploy-tf-vrs@v2
+      uses: MKTHEPLUGG/deploy-tf-vrs@v3
       with:
         storage_account_name: 'tfstatestore12345'
         container_name: $tfstatecontainer
