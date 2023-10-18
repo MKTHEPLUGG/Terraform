@@ -30,7 +30,7 @@ jobs:
 
     - name: Terraform Deploy to Azure
       uses: MKTHEPLUGG/deploy-tf-vrs@v1
-      # these vars are for azurerm providor to auth with azure to deploy infra
+      # these vars are for azurerm providor to auth with azure via SP we setup to deploy infra
       env:
         TF_VAR_client_id: ${{ secrets.AZURE_CLIENT_ID }}
         TF_VAR_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -40,7 +40,7 @@ jobs:
       # env:
       #   TF_LOG: DEBUG
       with:
-        # these vars are for the storage account authentication, we use the same sp in my setup for ease of use but you could split it
+        # these vars are for the storage account authentication, we use the same sp as above
         storage_account_name: 'tfstatestore12345'
         container_name: tfstatecontainer
         key: 'terraform.tfstate'
@@ -51,3 +51,6 @@ jobs:
         subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         working_directory: './vnet'
         # specify working directory to choose where you want to deploy from
+        
+        ### TO REMOVE !!! USE WITH CAUTION
+        command: 'destroy -auto-approve' 
