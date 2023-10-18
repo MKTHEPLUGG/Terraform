@@ -9,3 +9,7 @@ variable "location" {
   default = "westeurope"
 }
 
+variable "resourceGroup" {
+  type = string
+  default = "Test-RG-TF"
+}
