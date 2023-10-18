@@ -1,6 +1,7 @@
 terraform {
   backend "azurerm" {
-    # these values should be passed in via the workflow
+    # this config is used to auth with azure blob for backend of tf state file, 
+    # the values are to be defined in workflow via secrets
     # storage_account_name  = "tfstatestore12345"
     # container_name        = "tfstatecontainer"
     # key                   = "terraform.tfstate"

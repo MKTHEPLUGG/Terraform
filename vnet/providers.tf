@@ -1,5 +1,4 @@
 terraform {
-  backend "azurerm" {}
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -13,6 +12,7 @@ terraform {
   required_version = ">= 1.3.7"
 }
 
+# this providor is used to auth with azure to deploy resources, we have set github secrets and deploy via workflow
 provider "azurerm" {
   client_id       = var.client_id
   client_secret   = var.client_secret
