@@ -19,7 +19,7 @@ module "vm" {
   
   resource_group_name = var.resource_group_name
   resource_prefix   = var.resource_prefix
-  
+
   secret_name  = module.keyvault.secret_name
   key_vault_id = module.keyvault.key_vault_id
   secret_id  = module.keyvault.secret_id
@@ -28,3 +28,5 @@ module "vm" {
   subnet_id         = module.network.subnet_id
 
   }
+
+#   
