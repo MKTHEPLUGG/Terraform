@@ -49,5 +49,5 @@ jobs:
         client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
         tenant_id: ${{ secrets.AZURE_TENANT_ID }}
         subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        working_directory: './keyvault'
+        working_directory: './vm'
         # specify working directory to choose where you want to deploy from
