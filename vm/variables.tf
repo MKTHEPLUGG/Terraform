@@ -23,3 +23,8 @@ variable "resource_prefix" {
   type        = string
   default     = "myunique" # You can set a default value here
 }
+
+variable "resource_group_name" {
+  description = "Name of the resource group required"
+  type        = string
+}

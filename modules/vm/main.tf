@@ -49,7 +49,7 @@ resource "azurerm_public_ip" "pip" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "app-rg-ex3"
+  name     = var.resource_group_name
   location = var.location
 }
 
