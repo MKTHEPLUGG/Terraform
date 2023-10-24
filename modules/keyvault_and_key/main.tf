@@ -69,3 +69,5 @@ resource "azurerm_key_vault_secret" "kv_secret" {
   value        = random_password.user_password.result
   key_vault_id = azurerm_key_vault.kv.id
   }
+
+#
