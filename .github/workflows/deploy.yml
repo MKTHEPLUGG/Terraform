@@ -29,7 +29,7 @@ jobs:
 
 
     - name: Terraform Deploy to Azure
-      uses: MKTHEPLUGG/deploy-tf-vrs@1.0.5
+      uses: MKTHEPLUGG/deploy-tf-vrs@1.0.6
       # these vars are for azurerm providor to auth with azure via SP we setup to deploy infra
       env:
         TF_VAR_client_id: ${{ secrets.AZURE_CLIENT_ID }}
