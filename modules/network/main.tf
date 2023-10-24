@@ -32,10 +32,10 @@ resource "azurerm_network_security_group" "nsg" {
   }
 }
 
-output "subnet_id" {
-  description = "The ID of the subnet"
-  value       = azurerm_subnet.subnet.id
-}
+# output "subnet_id" {
+#   description = "The ID of the subnet"
+#   value       = azurerm_subnet.subnet.id
+# }
 
 resource "azurerm_resource_group" "rg" {
   name = var.resourceGroup
