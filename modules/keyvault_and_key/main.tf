@@ -68,6 +68,8 @@ resource "azurerm_key_vault_secret" "kv_secret" {
   name         = local.key_name
   value        = random_password.user_password.result
   key_vault_id = azurerm_key_vault.kv.id
+
+  depends_on = [azurerm_role_assignment.kv_admin]
   }
 
 #
