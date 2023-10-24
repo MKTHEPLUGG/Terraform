@@ -1,6 +1,6 @@
-# data "azurerm_client_config" "current" {
-#   // we can use this to import the data from the current client config, don't even need to specify anything here can just use it below in kv resource
-# }
+data "azurerm_client_config" "current" {
+  // we can use this to import the data from the current client config, don't even need to specify anything here can just use it below in kv resource
+}
 
 resource "azurerm_resource_group" "SymbolicRG" {
   // if you want to ignore changes to the infra
