@@ -10,8 +10,8 @@ module "network" {
 module "keyvault" {
   source = "../modules/keyvault_and_key"
 
-  location        = "westeurope"
-  rgName = "test-tf-3"
+  location        = module.network.location
+  rgName = module.network.location.resourceGroup
 }
 
 module "vm" {
