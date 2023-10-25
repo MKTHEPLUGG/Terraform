@@ -9,6 +9,7 @@ module "aks" {
   prefix = "MKS"
   location = "West Europe"
   role_based_access_control_enabled = "false"
+  rbac_aad = "false"
 
   // ... other variables
   // https://github.com/Azure/terraform-azurerm-aks/blob/main/variables.tf
