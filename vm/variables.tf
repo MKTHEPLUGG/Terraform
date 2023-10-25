@@ -27,4 +27,5 @@ variable "resource_prefix" {
 variable "resource_group_name" {
   description = "Name of the resource group required"
   type        = string
+  default     = "test-tf-3"
 }
