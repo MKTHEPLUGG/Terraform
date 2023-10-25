@@ -12,6 +12,7 @@ module "keyvault" {
 
   location        = module.network.location
   rgName = module.network.resourceGroup
+  key_name = "random"
 }
 
 module "vm" {
