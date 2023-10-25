@@ -28,5 +28,3 @@ module "vm" {
   subnet_id         = module.network.subnet_id
 
   }
-
-#
