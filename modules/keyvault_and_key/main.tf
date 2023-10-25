@@ -59,10 +59,16 @@ resource "azurerm_key_vault" "kv" {
 // assign admin role to current az logged in object id
 resource "azurerm_role_assignment" "kv_admin" {
   scope                = azurerm_key_vault.kv.id
-  # change scope to resouce level =   scope                = azurerm_resource_group.SymbolicRG.id
   principal_id         = data.azurerm_client_config.current.object_id
   role_definition_name = "key vault administrator"
 }
+
+# resource "azurerm_role_assignment" "rg_userAccess" {
+#   scope                = azurerm_resource_group.SymbolicRG.id # scoped on resource group level
+#   principal_id         = data.azurerm_client_config.current.object_id
+#   role_definition_name = "User Access Administrator"
+# }
+# not needed if you give userAccess on subscription level
 
 
 resource "azurerm_key_vault_secret" "kv_secret" {
