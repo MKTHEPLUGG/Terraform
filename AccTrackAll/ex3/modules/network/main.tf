@@ -38,7 +38,7 @@ output "subnet_id" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name = "app-rg-ex3"
+  name = var.rgName
   location = var.location
 }
 

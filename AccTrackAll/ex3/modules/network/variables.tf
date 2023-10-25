@@ -9,3 +9,8 @@ variable "location" {
   default = "westeurope"
 }
 
+variable "rgName" {
+  description = "Name of the resource group"
+  type        = string
+  default = "test-tf-3"
+}
