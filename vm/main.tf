@@ -17,7 +17,7 @@ module "keyvault" {
 module "vm" {
   source = "../modules/vm"
   
-  resource_group_name = "test-tf-3"
+  resource_group_name = module.network.resourceGroup
   resource_prefix   = var.resource_prefix
 
   secret_name  = module.keyvault.secret_name

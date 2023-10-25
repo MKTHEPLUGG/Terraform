@@ -68,10 +68,5 @@ resource "azurerm_storage_account" "bootdiagstorage" {
 data "azurerm_key_vault_secret" "vm_password" {
   name         = var.secret_name
   key_vault_id = var.key_vault_id
-  depends_on   = [module.keyvault_and_key.secret_id]
 }
 
-module "keyvault_and_key" {
-  source = "../keyvault_and_key"
-  # ... other module inputs ...
-}
