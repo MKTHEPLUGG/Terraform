@@ -1,7 +1,7 @@
 variable "rgName" {
   description = "Name of the resource group"
   type        = string
-  default = "app-rg-ex3"
+  default = "test-tf-3"
 }
 
 variable "location" {
