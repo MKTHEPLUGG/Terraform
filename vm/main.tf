@@ -11,7 +11,7 @@ module "keyvault" {
   source = "../modules/keyvault_and_key"
 
   location        = module.network.location
-  rgName = module.network.location.resourceGroup
+  rgName = module.network.resourceGroup
 }
 
 module "vm" {
