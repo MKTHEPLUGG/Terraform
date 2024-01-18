@@ -18,6 +18,7 @@ resource "tfe_workspace" "aks" {
     branch         = "main"                // Specify a branch, defaults to the repository's default branch if not set
     ingress_submodules = false             // Set to 'true' if you want Terraform Cloud to clone submodules
     oauth_token_id = "your-vcs-oauth-token-id"  // The VCS OAuth token ID in Terraform Cloud
+    // need to handle this token, chat gpt told us how
   }
 
   // Set the working directory within the repo
