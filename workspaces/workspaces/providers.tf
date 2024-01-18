@@ -3,3 +3,11 @@ provider "tfe" {
   // No explicit token is needed here
 }
 
+terraform {
+  required_providers {
+    tfe = {
+      source  = "hashicorp/tfe"
+      version = "~> 0.25"
+    }
+  }
+}

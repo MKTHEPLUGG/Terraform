@@ -1,9 +1,9 @@
 terraform {
   backend "remote" {
-    organization = "your-organization"
+    organization = "mikevh"
 
     workspaces {
-      name = "your-target-workspace"
+      name = "token-workspace"
     }
   }
 }
